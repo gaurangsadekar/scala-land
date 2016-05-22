@@ -59,5 +59,14 @@ object Main {
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+    if (money == 0) 1
+    // if current estimate overshoots or no more coins
+    else if (money < 0 || coins.isEmpty) 0
+    else
+    // recurrence is natural
+    // count change not taking top coin + taking top coin
+    // standard DP-Like recurrence without memoization
+      countChange(money, coins.tail) + countChange(money - coins.head, coins)
+  }
 }
