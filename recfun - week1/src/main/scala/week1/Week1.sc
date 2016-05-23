@@ -30,6 +30,26 @@ object Week1 {
   sqrt(1.0e20)
   sqrt(1.0e50)
 
+  // sqrt with higher order functions
+  def fixedPoint(f: Double => Double)(firstGuess: Double) = {
+    val tolerance = 1e-3
+    def isCloseEnough(x: Double, y: Double): Boolean = {
+      abs((x - y) / x) / x < tolerance
+    }
+
+    @tailrec
+    def iterate(guess: Double): Double = {
+      val next = f(guess)
+      if (isCloseEnough(guess, next)) next
+      else iterate(next)
+    }
+    iterate(firstGuess)
+  }
+  // averageDamp returns the average of original value and f applied to it
+  def averageDamp(f: Double => Double)(x: Double) = (x + f(x)) / 2
+  def newSqrt(n: Double) = fixedPoint(averageDamp(y => n / y))(1)
+  newSqrt(2)
+
   // tail recursive factorial
   def factorial(n:Int): Int = {
     @tailrec
