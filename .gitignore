@@ -1,3 +1,10 @@
 .DS_Store
 *.zip
+*.sbt
+*/submission/
+*/recitations/
+*/.idea
+*/.classpath
+*/project/
+*/.project
 
