@@ -154,12 +154,31 @@ class FunSetSuite extends FunSuite {
 
   test("filter function") {
     val s1 = positive(5)
-    val pred = even
+    val pred = multipleOfN(2)
     val filtered = filter(s1, pred)
     assert(contains(filtered, 1) === false)
     assert(contains(filtered, 2) === true)
     assert(contains(filtered, 3) === false)
     assert(contains(filtered, 4) === true)
     assert(contains(filtered, 5) === false)
+  }
+
+  test("forall") {
+    val evens = multipleOfN(2)
+    val threes = multipleOfN(3)
+    val sixes = intersect(evens, threes)
+    assert(forall(sixes, x => x % 6 == 0), "set of evens and multiples of 3 are multiples of 6")
+  }
+
+  test("exists") {
+    val sixes = multipleOfN(6)
+    assert(exists(sixes, multipleOfN(2)), "there exists a multiple of 6 which is also a multiple of 2")
+    assert(exists(sixes, multipleOfN(3)), "there exists a multiple of 6 which is also a multiple of 3")
+  }
+
+  test("map function") {
+    val threes = multipleOfN(3)
+    val plusOnes = map(threes, x => x + 1)
+    printSet(plusOnes)
   }
 }

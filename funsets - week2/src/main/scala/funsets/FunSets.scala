@@ -75,12 +75,13 @@ object FunSets {
   /**
    * The bounds for `forall` and `exists` are +/- 1000.
    */
-  val bound = 10
+  val bound = 20
 
+  // functions for testing sets
   def positive (bound: Int): Set = {
     x: Int => x > 0 && x <= bound
   }
-  def even: Set = (x => x % 2 == 0)
+  def multipleOfN(n: Int): Set = x => x % n == 0
   /**
    * Returns whether all bounded integers within `s` satisfy `p`.
    */
@@ -91,19 +92,37 @@ object FunSets {
       else if (s(a) && !p(a)) false
       else iter(a + 1)
     }
-    iter(bound)
+    iter(-bound)
   }
 
   /**
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
    */
-    def exists(s: Set, p: Int => Boolean): Boolean = ???
+  def exists(s: Set, p: Int => Boolean): Boolean = {
+    /*
+      if the negation of a predicate is false for all elements of the set,
+      'there exists some element' in the set, for which the predicate is true
+    */
+    !forall(s, x => !p(x))
+  }
 
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-    def map(s: Set, f: Int => Int): Set = ???
+  def map(s: Set, f: Int => Int): Set = {
+    /*
+       this one is good
+       map function takes an int e
+       and checks if there exists an element x in original set s
+       such that f(x) == e
+       This satisfies all requirements because:
+       * only applies transformation on elements in the set
+       * yields the number e, if f(x) == e,
+       * meaning it yields the transformed number
+     */
+    e: Int => exists(s, x => f(x) == e)
+  }
 
   /**
    * Displays the contents of a set
