@@ -5,6 +5,10 @@
 */recitations/
 */.idea
 */.classpath
+*/.settings/
 */project/
 */.project
-
+*/target/
+*/lib/
+*/lib_managed/
+*/common
