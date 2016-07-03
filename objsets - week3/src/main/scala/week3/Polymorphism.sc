@@ -1,5 +1,7 @@
 package week3
 
+import objsets.{Empty, NonEmpty, TweetSet}
+
 trait List[+T] {
   def isEmpty: Boolean
   def head: T
@@ -54,6 +56,6 @@ object Polymorphism {
     * /therefore, this assignment is possible
     */
 
-  def fn(xs: List[NonEmpty], x: Empty): List[IntSet] = xs prepend x
+  def fn(xs: List[NonEmpty], x: Empty): List[TweetSet] = xs prepend x
   val x: List[String] = Nil
 }
