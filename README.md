@@ -1,5 +1,7 @@
 # scala-land
 Exercises in Learning Scala
 
-## Level 1:
-Martin Odersky's Coursera offering: [Functional Programming Principles in Scala](https://class.coursera.org/progfun-005/lecture).
+### Good Learning Resources:
+* Martin Odersky's Coursera offering: [Functional Programming Principles in Scala](https://class.coursera.org/progfun-005/lecture) - Very good up resource to start with
+* [Scala 99 Problems](http://aperiodic.net/phil/scala/s-99/)
+
