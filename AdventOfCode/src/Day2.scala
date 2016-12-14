@@ -2,40 +2,56 @@ import scala.annotation.tailrec
 
 class ToiletCode {
   case class Position(row: Int, col: Int)
-  def evalRow(rowStr: String, prevPos: Position) = {
-    def nextPosition(pos: Position, move: Char) = {
-      def valid(p: Int, old: Int) = if (0 <= p && p < 3) p else old
-      move match {
-        case 'R' => Position(pos.row, valid(pos.col + 1, pos.col))
-        case 'L' => Position(pos.row, valid(pos.col - 1, pos.col))
-        case 'U' => Position(valid(pos.row - 1, pos.row), pos.col)
-        case 'D' => Position(valid(pos.row + 1, pos.row), pos.col)
-      }
-    }
-    val row = rowStr.toCharArray()
-    row.foldLeft(prevPos)(nextPosition)
-  }
 
-  def keyCode(rows: List[String]) = {
-    def numPadEntry(pos: Position) = pos.row * 3 + pos.col + 1
+  def keyCode(rows: List[String], keypad: Array[Array[String]]) = {
+    def evalRow(rowStr: String, prevPos: Position) = {
+      def nextPosition(pos: Position, move: Char) = {
+        def valid(p: Position) = {
+          // sensitive to keypad
+          val len = keypad.length
+          val inBounds = (x: Int) => 0 <= x && x < len
+          if (inBounds(p.row) && inBounds(p.col) && numPadEntry(p) != "0")
+            p
+          else pos
+        }
+        move match {
+          case 'R' => valid(Position(pos.row, pos.col + 1))
+          case 'L' => valid(Position(pos.row, pos.col - 1))
+          case 'U' => valid(Position(pos.row - 1, pos.col))
+          case 'D' => valid(Position(pos.row + 1, pos.col))
+        }
+      }
+      val row = rowStr.toCharArray()
+      row.foldLeft(prevPos)(nextPosition)
+    }
+
+    def numPadEntry(pos: Position) = keypad(pos.row)(pos.col)
+
     @tailrec
-    def getKeyCode(rows: List[String], pos: Position, code: Int): Int = rows match {
+    def getKeyCode(rows: List[String], pos: Position, code: String): String = rows match {
       case Nil => code
       case row :: rs => {
         val posAfterRow = evalRow(row, pos)
         val key = numPadEntry(posAfterRow)
-        getKeyCode(rs, posAfterRow, code * 10 + key)
+        getKeyCode(rs, posAfterRow, code + key)
       }
     }
-    getKeyCode(rows, Position(1, 1), 0)
+    getKeyCode(rows, Position(1, 1), "")
   }
 }
-
 
 object Day2 {
   def apply(inputList: List[String]) {
     val tc = new ToiletCode()
-    println(inputList.length)
-    println(tc.keyCode(inputList))
+    val keypad1 = Array(Array("1","2","3"), Array("4","5","6"), Array("7","8","9"))
+    val keypad2 = Array(
+      Array("0", "0", "1", "0", "0"),
+      Array("0","2", "3", "4", "0"),
+      Array("5", "6", "7","8","9"),
+      Array("0", "A", "B","C", "0"),
+      Array("0", "0", "D", "0", "0")
+    )
+    println("Part 1 keycode:", tc.keyCode(inputList, keypad1))
+    println("Part 2 keycode:", tc.keyCode(inputList, keypad2))
   }
 }
