@@ -1,9 +1,10 @@
+
 import scala.annotation.tailrec
 
+case class Position(row: Int, col: Int)
 class ToiletCode {
-  case class Position(row: Int, col: Int)
 
-  def keyCode(rows: List[String], keypad: Array[Array[String]]) = {
+  def keyCode(rows: List[String], keypad: Array[Array[String]], initPos: Position) = {
     def evalRow(rowStr: String, prevPos: Position) = {
       def nextPosition(pos: Position, move: Char) = {
         def valid(p: Position) = {
@@ -36,7 +37,7 @@ class ToiletCode {
         getKeyCode(rs, posAfterRow, code + key)
       }
     }
-    getKeyCode(rows, Position(1, 1), "")
+    getKeyCode(rows, initPos, "")
   }
 }
 
@@ -51,7 +52,7 @@ object Day2 {
       Array("0", "A", "B","C", "0"),
       Array("0", "0", "D", "0", "0")
     )
-    println("Part 1 keycode:", tc.keyCode(inputList, keypad1))
-    println("Part 2 keycode:", tc.keyCode(inputList, keypad2))
+    println("Part 1 keycode:", tc.keyCode(inputList, keypad1, Position(1,1)))
+    println("Part 2 keycode:", tc.keyCode(inputList, keypad2, Position(2, 0)))
   }
 }
