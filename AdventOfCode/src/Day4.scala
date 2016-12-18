@@ -39,9 +39,7 @@ class RoomSecurity {
 
   def sumSectorId(input: List[String]) = {
     input.map(processRoom)
-      .flatMap{ r => if (r.isReal) {
-        Some(r.sectorId)
-      } else None }
+      .flatMap{ r => if (r.isReal) Some(r.sectorId) else None }
       .sum
   }
 
