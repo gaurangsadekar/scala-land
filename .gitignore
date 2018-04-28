@@ -12,3 +12,5 @@
 */lib/
 */lib_managed/
 */common
+*.class
+*.iml
