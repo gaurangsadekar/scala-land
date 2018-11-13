@@ -15,3 +15,6 @@ Scala solves this problem by type linearization, by which we can always and dete
 * Expand each supertype recursively and put all their types into this list.
 * Remove duplicates from resulting list, scanning from left
 * To resolve a call, look in the linearized list from right to left.
+
+## Abstract Type Member
+

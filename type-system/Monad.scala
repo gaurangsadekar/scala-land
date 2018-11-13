@@ -16,7 +16,7 @@ Functor = can map
 trait Monad[A] {
     def flatMap[B](f: A => Monad[B]): Monad[B]
 
-    def map[B](g: A => B): Monad[B] = flatMap(x => Monad.identity(g(x)))
+    def map[B](g: A => B): Monad[B] = flatMap(x => Monad(g(x)))
 }
 
 object Monad {
